@@ -21,9 +21,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(<>
     <Route path="*" element={<React.Suspense fallback={<LoadingScreen text="..." />}><Page404 /></React.Suspense>} />
     <Route path="/" element={<RootLayout />}>
-      <Route path="/" element={<React.Suspense fallback={<LoadingScreen text="Landing Page" />}><PageLanding /></React.Suspense>} />
-      <Route path="game" element={<React.Suspense fallback={<LoadingScreen text="Game Page" />}><PageGame /></React.Suspense>} />
-      <Route path="over" element={<React.Suspense fallback={<LoadingScreen text="Gameover Page" />}><PageOver /></React.Suspense>} />
+      <Route path="/" element={<React.Suspense fallback={<LoadingScreen text="Main Menu" />}><PageLanding /></React.Suspense>} />
+      <Route path="game" element={<React.Suspense fallback={<LoadingScreen text="Game" />}><PageGame /></React.Suspense>} />
+      <Route path="over" element={<React.Suspense fallback={<LoadingScreen text="Gameover" />}><PageOver /></React.Suspense>} />
     </Route>
   </>)
 );

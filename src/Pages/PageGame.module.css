@@ -46,8 +46,13 @@
     margin: 0 auto;
 }
 
+.answersContainer > button:hover {
+    transform: scale(1.05);
+}
+
 
 .chosen, .chosen::after, .correct, .correct::after, .incorrect, .incorrect::after {
+    content: "";
     background: none;
     cursor: default;
     transform: scale(1) !important;

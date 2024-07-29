@@ -15,7 +15,7 @@ export default function PageLanding() {
     const navigate = useNavigate();
 
     // form validity
-    const formAmountRange = {min:1, max:100};
+    const formAmountRange = {min:1, max:50};
     const formDifficulties:string[] = ["any", "easy", "medium", "hard"];
     const formCategories:string[] = ["any"];
     const formTypes:string[] = ["any", "multiple", "boolean"];

@@ -3,6 +3,7 @@
 
 
 - parse JSON into HTML (DOMParser)
+    * unparsed answers with special character dont get correct color class once revealed
 
 - select / input arrows in postCSS
 
