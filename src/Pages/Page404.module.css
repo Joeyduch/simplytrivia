@@ -1,0 +1,44 @@
+
+.Page404 {
+    position: relative;
+    min-width: 100%;
+    min-height: 100vh;
+
+    text-align: center;
+
+    /* border: 2px solid red; */
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.container > div > h1 {
+    font-size: 4rem;
+}
+
+
+.returnButton {
+    padding: 0.5rem 2rem;
+    border-radius: 2rem;
+
+    background-color: transparent;
+    border: var(--border-width) solid white;
+
+    transition: all 200ms;
+}
+
+.returnButton:hover {
+    background-color: white;
+    color: black;
+    transform: scale(1.1);
+}

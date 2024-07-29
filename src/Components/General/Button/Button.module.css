@@ -1,0 +1,53 @@
+.Button {
+  position: relative;
+
+  max-width: 22rem;
+  width: 100%;
+  min-height: 4rem;
+  line-height: calc(4rem - var(--border-width)*2);
+
+  padding: 0 1rem;
+
+  cursor: pointer;
+
+  border: var(--border-width) solid transparent;
+  border-radius: var(--border-radius);
+
+  background: 
+    linear-gradient(135deg, var(--color-primary-300), var(--color-secondary-300)) padding-box,
+    linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500)) border-box;
+
+  background-color: var(--color-grays-300); /* fallback */
+
+  transition: transform 200ms;
+}
+
+.Button:hover {
+  transform: scale(1.1);
+}
+
+  
+.Button::after {
+  position:absolute;
+  content: attr(data-text);
+  top: calc(var(--border-width) * -1);
+  left: calc(var(--border-width) * -1);
+  width: calc(100% + var(--border-width)*2);
+  min-height: calc(100% + var(--border-width)*2);
+  line-height: calc(4rem - var(--border-width)*2);
+
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid transparent;
+
+  background: 
+    linear-gradient(135deg, var(--color-primary-400), var(--color-secondary-400)) padding-box,
+    linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600)) border-box;
+  
+  opacity: 0;
+
+  transition: opacity 200ms;
+}
+  
+.Button:hover::after {
+  opacity: 1;
+}

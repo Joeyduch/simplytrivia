@@ -1,0 +1,23 @@
+
+.Header {
+    line-height: 4rem;
+
+    border-bottom: var(--border-width) solid var(--color-primary-500);
+    /* background-color: rgba(255, 50, 50, 0.2); */
+}
+
+.Header > a {
+    display: block;
+    max-width: fit-content;
+    
+    margin: 0 auto;
+
+    text-decoration: none;
+
+    transition: transform 200ms;
+}
+
+.Header > a:hover {
+    transform: scale(1.1);
+    text-decoration: underline;
+}

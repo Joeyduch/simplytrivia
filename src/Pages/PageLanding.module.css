@@ -1,0 +1,40 @@
+.PageLanding {
+    /* border: 2px solid blue; */
+}
+
+.PageLanding > form {
+    margin: 0 auto;
+}
+
+.inputsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+
+    margin-bottom: 4rem;
+
+    /* border: 2px dashed red; */
+}
+
+.inputsContainer > label {
+    display: flex;
+    flex-direction: column;
+}
+
+option {
+    background-color: var(--color-secondary-300);
+}
+
+
+.submit {
+    display:block;
+    margin: 0 auto;
+}
+
+
+
+@media(max-width: 600px) {
+    .inputsContainer {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,21 @@
+
+.Footer {
+    padding: 2rem;
+
+    border-top: var(--border-width) solid var(--color-secondary-500);
+    /* background-color: rgba(50,50,255, 0.2); */
+}
+
+.Footer > a {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    text-decoration: none;
+
+    transition: transform 200ms;
+}
+
+.Footer > a:hover {
+    text-decoration: underline;
+    transform: scale(1.1);
+}

@@ -1,0 +1,58 @@
+
+.PageOver {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+
+    margin: 0 auto;
+
+    /* border: 2px solid orange; */
+}
+
+.PageOver > h1, .PageOver > h2 {
+    text-align: center;
+}
+
+.dataContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+
+    width: 100%;
+
+    text-align: center;
+}
+
+.dataContainer > *:first-child {
+    text-align: left;
+}
+.dataContainer > *:last-child {
+    text-align: right;
+}
+
+.dataContainer > * {
+    /* border: 2px solid yellow; */
+}
+
+
+.PageOver > a {
+    width: 100%;
+}
+.PageOver > a > button {
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+@media(max-width: 600px) {
+    .dataContainer {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .dataContainer > *:first-child, .dataContainer > *:last-child {
+        text-align: center;
+    }
+}

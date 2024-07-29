@@ -1,0 +1,92 @@
+.PageGame {
+    display:flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 0 auto;
+    /* border: 2px solid green; */
+}
+
+.PageGame > h2 {
+    text-align: center;
+}
+
+
+.infoContainer {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+
+.questionContainer {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+.question {
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+    text-shadow: 0rem 0rem 1rem black;
+}
+
+
+.answersContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    /* border: 2px solid magenta; */
+}
+
+.answersContainer > button {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+.chosen, .chosen::after, .correct, .correct::after, .incorrect, .incorrect::after {
+    background: none;
+    cursor: default;
+    transform: scale(1) !important;
+}
+
+
+.correct {
+    background-color: var(--color-right-300);
+    border-color: var(--color-right-400);
+}
+
+.incorrect {
+    background-color: var(--color-wrong-300);
+    border-color: var(--color-wrong-400);
+}
+
+.chosen.correct {
+    background-color: var(--color-right-400);
+    border-color: var(--color-right-500);
+
+    box-shadow: 0rem 0rem 1rem 0rem var(--color-right-500);
+}
+
+.chosen.incorrect {
+    background-color: var(--color-wrong-400);
+    border-color: var(--color-wrong-500);
+
+    box-shadow: 0rem 0rem 1rem 0rem var(--color-wrong-500);
+}
+
+
+.nextQuestionButton {
+    margin: 0 auto;
+}
+
+
+
+@media(max-width: 600px) {
+    .questionContainer {
+        grid-template-columns: 1fr;
+    }
+}
