@@ -27,8 +27,33 @@ class Question {
         this.question = questionJsonData && questionJsonData.question || "Some question";
         this.correctAnswer = questionJsonData && questionJsonData.correct_answer || "Correct Answer";
         this.incorrectAnswers = questionJsonData && questionJsonData.incorrect_answers || ["Incorrect A", "Incorrect B"];
+
+        this.parseHTML();
+    }
+
+    parseHTML = () => {
+        const parser = new DOMParser();
+
+        let doc = parser.parseFromString(this.category, "text/html");
+        let text = doc.body.textContent || ""
+        this.category = text;
+
+        doc = parser.parseFromString(this.question, "text/html");
+        text = doc.body.textContent || ""
+        this.question = text;
+        
+        doc = parser.parseFromString(this.correctAnswer, "text/html");
+        text = doc.body.textContent || ""
+        this.correctAnswer = text;
+
+        for(let i=0; i<this.incorrectAnswers.length; i++) {
+            doc = parser.parseFromString(this.incorrectAnswers[i], "text/html");
+            text = doc.body.textContent || ""
+            this.incorrectAnswers[i] = text;
+        }
     }
 }
+
 
 
 type GameSettings = {
@@ -56,6 +81,34 @@ export default function PageGame() {
     const [currentQuestion, setCurrentQuestion] = useState<Question|null>(null);
     const [answersList, setAnswersList] = useState<string[]>([]);
 
+
+    // methods
+    const tryFetch = async (url:string, tries:number=1) => {
+        console.warn(`** fetching try #${tries} **`);
+        if(tries >= 8) {
+            console.error("Max tries reached, exiting back to main menu");
+            navigate("/");
+            return;
+        }
+        
+        await fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if(data.response_code != 0) {
+                throw("invalid response code");
+            }
+
+            setCurrentQuestionIndex(0);
+            setQuestionsList(data.results);
+        })
+        .catch(err => {
+            console.error(err);
+            
+            setTimeout(() => {
+                if(questionsList.length === 0) tryFetch(url, tries+1);
+            }, 2000);
+        });
+    }
 
     // buttons handlers
     const handleAnswerButton = (chosenAnswer:string) => {
@@ -131,33 +184,6 @@ export default function PageGame() {
         tryFetch(requestUrl);
     }, [gameSettings])
 
-    const tryFetch = async (url:string, tries:number=1) => {
-        console.warn(`** fetching try #${tries} **`);
-        if(tries >= 8) {
-            console.error("Max tries reached, exiting back to main menu");
-            navigate("/");
-            return;
-        }
-        
-        await fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            if(data.response_code != 0) {
-                throw("invalid response code");
-            }
-
-            setCurrentQuestionIndex(0);
-            setQuestionsList(data.results);
-        })
-        .catch(err => {
-            console.error(err);
-            
-            setTimeout(() => {
-                if(questionsList.length === 0) tryFetch(url, tries+1);
-            }, 2000);
-        });
-    }
-
     // set new current question
     useEffect(() => {
         const question:Question = new Question(questionsList[currentQuestionIndex]);
@@ -182,7 +208,7 @@ export default function PageGame() {
     return(
         <div className={`${style.PageGame} grid-fill`}>
             {questionsList.length===0 || !currentQuestion ? <LoadingScreen text="Fetching Data" /> : <>
-                <h2>{currentQuestion.category} - {currentQuestion.difficulty}</h2>
+                <h2>{currentQuestion.category} - {currentQuestion.difficulty[0].toUpperCase() + currentQuestion.difficulty.slice(1)}</h2>
 
                 <div className={style.infoContainer}>
                     <p>Round: {currentQuestionIndex+1}/{questionsList.length}</p>

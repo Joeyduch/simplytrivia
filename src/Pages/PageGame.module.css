@@ -26,10 +26,13 @@
 
 
 .question {
+    display: grid;
+    place-items: center;
     border-radius: var(--border-radius);
     padding: 1rem;
     background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
     text-shadow: 0rem 0rem 1rem black;
+    text-align: center;
 }
 
 

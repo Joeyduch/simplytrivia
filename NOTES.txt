@@ -1,13 +1,10 @@
 
 
+- add actual categoy choices
 
-
-- parse JSON into HTML (DOMParser)
-    * unparsed answers with special character dont get correct color class once revealed
+- buttons have wrong text placement on more than one line text
 
 - select / input arrows in postCSS
-
-- tab icon !
 
 
 
