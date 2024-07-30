@@ -66,10 +66,16 @@
     background-color: var(--color-right-300);
     border-color: var(--color-right-400);
 }
+.correct:hover {
+    box-shadow: 0rem 0rem 0rem 0rem transparent;
+}
 
 .incorrect {
     background-color: var(--color-wrong-300);
     border-color: var(--color-wrong-400);
+}
+.incorrect:hover {
+    box-shadow: 0rem 0rem 0rem 0rem transparent;
 }
 
 .chosen.correct {
@@ -78,11 +84,17 @@
 
     box-shadow: 0rem 0rem 1rem 0rem var(--color-right-500);
 }
+.chosen.correct:hover {
+    box-shadow: 0rem 0rem 1rem 0rem var(--color-right-500);
+}
 
 .chosen.incorrect {
     background-color: var(--color-wrong-400);
     border-color: var(--color-wrong-500);
 
+    box-shadow: 0rem 0rem 1rem 0rem var(--color-wrong-500);
+}
+.chosen.incorrect:hover {
     box-shadow: 0rem 0rem 1rem 0rem var(--color-wrong-500);
 }
 

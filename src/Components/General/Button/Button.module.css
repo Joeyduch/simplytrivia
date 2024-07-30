@@ -24,6 +24,7 @@
 
 .Button:hover {
   transform: scale(1.1);
+  box-shadow: 0rem 0rem 1rem 0rem var(--color-primary-500);
 }
 
   
@@ -35,6 +36,8 @@
   width: calc(100% + var(--border-width)*2);
   min-height: calc(100% + var(--border-width)*2);
   line-height: calc(4rem - var(--border-width)*2);
+
+  padding: 0 1rem;
 
   border-radius: var(--border-radius);
   border: var(--border-width) solid transparent;

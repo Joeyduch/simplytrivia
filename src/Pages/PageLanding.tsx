@@ -31,7 +31,7 @@ export default function PageLanding() {
     const handleformAmount = (event:ChangeEvent<HTMLInputElement>): void => {
         const value = event.target.value;
         if(isNaN(parseInt(value))) {
-            setformAmountValue(formAmountValue);
+            setformAmountValue(1);
             return;
         }
 
@@ -81,12 +81,12 @@ export default function PageLanding() {
             <form className={"grid-fill"}>
                 <div className={style.inputsContainer}>
                     <label>
-                        <span>Number of questions:</span>
+                        <span>Number of questions</span>
                         <input type="number" name="number_questions" value={formAmountValue} onChange={handleformAmount}></input>
                     </label>
 
                     <label>
-                        <span>Difficulty:</span>
+                        <span>Difficulty</span>
                         <select name="difficulty" defaultValue={formDifficultyValue} onChange={handleFormDifficulty}>
                             <option value="any">Any difficulty</option>
                             <option value="easy">Easy</option>
@@ -96,14 +96,14 @@ export default function PageLanding() {
                     </label>
 
                     <label>
-                        <span>Category:</span>
+                        <span>Category</span>
                         <select name="category" defaultValue={formCategoryValue} onChange={handleFormCategory}>
                             <option value="any">Any category</option>
                         </select>
                     </label>
 
                     <label>
-                        <span>Question Type:</span>
+                        <span>Question Type</span>
                         <select name="type" defaultValue={formTypeValue} onChange={handleFormType}>
                             <option value="any">Any type</option>
                             <option value="multiple">Multiple choice</option>

@@ -208,7 +208,10 @@ export default function PageGame() {
     return(
         <div className={`${style.PageGame} grid-fill`}>
             {questionsList.length===0 || !currentQuestion ? <LoadingScreen text="Fetching Data" /> : <>
-                <h2>{currentQuestion.category} - {currentQuestion.difficulty[0].toUpperCase() + currentQuestion.difficulty.slice(1)}</h2>
+                <div className={style.infoContainer}>
+                    <h2>{currentQuestion.category}</h2>
+                    <p>{currentQuestion.difficulty[0].toUpperCase() + currentQuestion.difficulty.slice(1)}</p>
+                </div>
 
                 <div className={style.infoContainer}>
                     <p>Round: {currentQuestionIndex+1}/{questionsList.length}</p>

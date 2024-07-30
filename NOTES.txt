@@ -1,12 +1,8 @@
 
 
-- add actual categoy choices
-
-- buttons have wrong text placement on more than one line text
-
-- select / input arrows in postCSS
+- add actual category choices
 
 
 
 - before shipping:
-    add autoprefixer (postCSS)
+    add autoprefixer (postCSS)   
