@@ -1,6 +1,6 @@
 
 // packages
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // components
@@ -11,23 +11,111 @@ import style from "./PageLanding.module.css";
 
 
 
+/*
+    TYPES / INTERFACES
+*/
+
+// Categories
+interface FetchedCategories {
+    trivia_categories: CategoryList
+}
+interface CategoryCount {
+    category_id: number,
+    category_question_count: {
+        total_easy_question_count: number,
+        total_medium_question_count: number,
+        total_hard_question_count: number,
+        total_question_count: number,
+    }
+}
+
+interface Category {
+    id:number,
+    name:string
+};
+
+type CategoryList = Array<Category>;
+
+// Themes
+interface Theme {
+    name:string,
+    huePrimary: string,
+    hueSecondary: string,
+    hueRight: string,
+    hueWrong: string
+}
+
+
+
+/*
+    GLOBALS
+*/
+
+const themes:Theme[] = [
+    {
+        name: "Default",
+        huePrimary: "285",
+        hueSecondary: "195",
+        hueRight: "125",
+        hueWrong: "350"
+    },
+    {
+        name: "Inverted",
+        huePrimary: "195",
+        hueSecondary: "285",
+        hueRight: "125",
+        hueWrong: "350"
+    },
+    {
+        name: "Summer",
+        huePrimary: "25",
+        hueSecondary: "325",
+        hueRight: "125",
+        hueWrong: "325"
+    },
+    {
+        name: "Winter",
+        huePrimary: "175",
+        hueSecondary: "205",
+        hueRight: "150",
+        hueWrong: "300"
+    },
+    {
+        name: "Alien",
+        huePrimary: "300",
+        hueSecondary: "150",
+        hueRight: "150",
+        hueWrong: "300"
+    }
+]
+
+
+
+/*
+    COMPONENT
+*/
+
 export default function PageLanding() {
     const navigate = useNavigate();
 
     // form validity
-    const formAmountRange = {min:1, max:50};
-    const formDifficulties:string[] = ["any", "easy", "medium", "hard"];
-    const formCategories:string[] = ["any"];
-    const formTypes:string[] = ["any", "multiple", "boolean"];
+    const formValidityAmountRange = {min:1, max:50};
+    const formValidityDifficulties:string[] = ["any", "easy", "medium", "hard"];
+    const [formValidityCategories, setFormValidityCategories] = useState<string[]>(["any"]);
 
     // form values
     const [formAmountValue, setformAmountValue] = useState<number>(10);
     const [formDifficultyValue, setFormDifficultyValue] = useState<string>("any");
     const [formCategoryValue, setFormCategoryValue] = useState<string>("any");
-    const [formTypeValue, setFormTypeValue] = useState<string>("any");
+    const [formThemeValue, setFormThemeValue] = useState<string>("0");
+
+    const [categoryList, setCategoryList] = useState<CategoryList|null>(null);
+    const [categoryCount, setCategoryCount] = useState<CategoryCount|null>(null);
 
 
-    // form handling
+    // ------------------
+    // form handlers
+
     const handleformAmount = (event:ChangeEvent<HTMLInputElement>): void => {
         const value = event.target.value;
         if(isNaN(parseInt(value))) {
@@ -35,7 +123,7 @@ export default function PageLanding() {
             return;
         }
 
-        setformAmountValue(Math.min(Math.max(parseInt(event.target.value), formAmountRange.min), formAmountRange.max));
+        setformAmountValue(Math.min(Math.max(parseInt(event.target.value), formValidityAmountRange.min), formValidityAmountRange.max));
     }
 
     const handleFormDifficulty = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -44,16 +132,15 @@ export default function PageLanding() {
 
     const handleFormCategory = (event: ChangeEvent<HTMLSelectElement>): void => setFormCategoryValue(event.target.value);
 
-    const handleFormType = (event: ChangeEvent<HTMLSelectElement>): void => setFormTypeValue(event.target.value);
+    const handleFormTheme = (event: ChangeEvent<HTMLSelectElement>): void => setFormThemeValue(event.target.value);
 
     const handleFormSubmit = (): void => {
         // validation
         const validate = (): boolean => {
-            if(formDifficulties.indexOf(formDifficultyValue) === -1) return false;
-            if(formCategories.indexOf(formCategoryValue) === -1) return false;
-            if(formTypes.indexOf(formTypeValue) === -1) return false;
+            if(formValidityDifficulties.indexOf(formDifficultyValue) === -1) return false;
+            if(formValidityCategories.indexOf(formCategoryValue) === -1) return false;
 
-            if(formAmountValue<formAmountRange.min || formAmountValue>formAmountRange.max) return false;
+            if(formAmountValue<formValidityAmountRange.min || formAmountValue>formValidityAmountRange.max) return false;
 
             return true;
         }
@@ -68,14 +155,117 @@ export default function PageLanding() {
             amount: formAmountValue,
             difficulty: formDifficultyValue,
             category: formCategoryValue,
-            type: formTypeValue
         }
 
         navigate("/game", {state: {formData: requestData}});
     }
 
+    // ------------------
+    // Fetching functions
 
+    const fetchCategories = () => {
+        return new Promise<FetchedCategories>((resolve, reject) => {
+            fetch("https://opentdb.com/api_category.php")
+                .then(res => res.json())
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+        });
+    }
+
+    const fetchCategoryCount = (categoryId:string) => {
+        return new Promise<CategoryCount>((resolve, reject) => {
+            fetch(`https://opentdb.com/api_count.php?category=${categoryId}`)
+                .then(res => res.json())
+                .then(data => resolve(data))
+                .catch(error => reject(error));
+        });
+    }
+
+
+    // ------------------
+    // UseEffects
+
+    // fetch categories 
+    useEffect(() => {
+        fetchCategories()
+            .then(data => {
+                setCategoryList([... data.trivia_categories]);
+            })
+            .catch(error => console.info(error));
+    }, []);
+
+    // add categories to form validity
+    useEffect(() => {
+        if(!categoryList) return;
+        console.log("- Update Category List -");
+
+        const newCategories = [];
+        for(const category of categoryList) {
+            newCategories.push(category.id.toString())
+        }
+
+        setFormValidityCategories(["any", ... newCategories]);
+    }, [categoryList]);
+
+    // make sure we dont ask for more questions than there are available
+    useEffect(() => {
+        if(formCategoryValue === "any") {
+            setCategoryCount(null);
+            return;
+        }
+        
+        fetchCategoryCount(formCategoryValue)
+            .then(data => {
+                setCategoryCount(data);
+            })
+            .catch(error => {
+                console.info("Error fetching category count");
+                console.error(error);
+            });
+
+    }, [formCategoryValue])
+
+    useEffect(() => {
+        if(!categoryCount) {
+            console.info("No categoryCount fetched");
+            return;
+        }
+
+        let finalAmountValue = formAmountValue;
+        switch(formDifficultyValue) {
+            case "any":
+                finalAmountValue = Math.min(finalAmountValue, categoryCount.category_question_count.total_question_count);
+                break;
+            case "easy":
+                finalAmountValue = Math.min(finalAmountValue, categoryCount.category_question_count.total_easy_question_count);
+                break;
+            case "medium":
+                finalAmountValue = Math.min(finalAmountValue, categoryCount.category_question_count.total_medium_question_count);
+                break;
+            case "hard":
+                finalAmountValue = Math.min(finalAmountValue, categoryCount.category_question_count.total_hard_question_count);
+                break;
+        }
+
+        setformAmountValue(finalAmountValue);
+
+    }, [categoryCount, formDifficultyValue, formAmountValue])
+
+    // change theme
+    useEffect(() => {
+        if(!formThemeValue) return;
+
+        const newTheme:Theme = themes[parseInt(formThemeValue)];
+        document.documentElement.style.setProperty("--color-primary-hue", newTheme.huePrimary);
+        document.documentElement.style.setProperty("--color-secondary-hue", newTheme.hueSecondary);
+        document.documentElement.style.setProperty("--color-right-hue", newTheme.hueRight);
+        document.documentElement.style.setProperty("--color-wrong-hue", newTheme.hueWrong);
+    }, [formThemeValue]);
+
+
+    // ------------------
     // rendering
+
     return(
         <div className={style.PageLanding}>
             <form className={"grid-fill"}>
@@ -83,6 +273,14 @@ export default function PageLanding() {
                     <label>
                         <span>Number of questions</span>
                         <input type="number" name="number_questions" value={formAmountValue} onChange={handleformAmount}></input>
+                    </label>
+
+                    <label>
+                        <span>Category</span>
+                        <select name="category" defaultValue={formCategoryValue} onChange={handleFormCategory}>
+                            <option value="any">Any category</option>
+                            {!categoryList ? "" : categoryList.map(category => <option value={category.id} key={category.id}>{category.name}</option>)}
+                        </select>
                     </label>
 
                     <label>
@@ -94,20 +292,14 @@ export default function PageLanding() {
                             <option value="hard">Hard</option>
                         </select>
                     </label>
-
+                    
                     <label>
-                        <span>Category</span>
-                        <select name="category" defaultValue={formCategoryValue} onChange={handleFormCategory}>
-                            <option value="any">Any category</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        <span>Question Type</span>
-                        <select name="type" defaultValue={formTypeValue} onChange={handleFormType}>
-                            <option value="any">Any type</option>
-                            <option value="multiple">Multiple choice</option>
-                            <option value="boolean">True / False</option>
+                        <span>Theme</span>
+                        <select name="difficulty" onChange={handleFormTheme}>
+                            {themes.map((value, index) =>
+                                <option key={index} value={index}>{value.name}</option>
+                            )}
+                            
                         </select>
                     </label>
                 </div>

@@ -15,7 +15,6 @@ import style from "./PageGame.module.css"
 class Question {
     difficulty: string;
     category: string;
-    type: string;
     question: string;
     correctAnswer: string;
     incorrectAnswers: string[];
@@ -23,7 +22,6 @@ class Question {
     constructor(questionJsonData?:any) {
         this.difficulty = questionJsonData && questionJsonData.difficulty || "Some difficulty";
         this.category = questionJsonData && questionJsonData.category || "Some category";
-        this.type = questionJsonData && questionJsonData.type || "Some type";
         this.question = questionJsonData && questionJsonData.question || "Some question";
         this.correctAnswer = questionJsonData && questionJsonData.correct_answer || "Correct Answer";
         this.incorrectAnswers = questionJsonData && questionJsonData.incorrect_answers || ["Incorrect A", "Incorrect B"];
@@ -60,7 +58,6 @@ type GameSettings = {
     amount: number,
     difficulty: string,
     category: string,
-    type: string,
 }
 
 
@@ -165,7 +162,6 @@ export default function PageGame() {
             amount: formData.amount,
             difficulty: formData.difficulty,
             category: formData.category,
-            type: formData.type
         }
         
         setGameSettings(newGameSettings);
@@ -178,7 +174,6 @@ export default function PageGame() {
         let requestUrl:string = `https://opentdb.com/api.php?amount=${gameSettings.amount}`;
         if(gameSettings.difficulty != "any") requestUrl += `&difficulty=${gameSettings.difficulty}`;
         if(gameSettings.category != "any") requestUrl += `&category=${gameSettings.category}`;
-        if(gameSettings.type != "any") requestUrl += `&type=${gameSettings.type}`;
 
         console.info("-- fetching --");
         tryFetch(requestUrl);
