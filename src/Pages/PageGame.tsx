@@ -114,11 +114,15 @@ export default function PageGame() {
         if(chosenAnswer===currentQuestion?.correctAnswer) setScore(s => s+1);
 
         // set CSS
+        console.log(`-> -----------------`)
         let buttonsContainerElement:HTMLDivElement = answersButtonContainerElement.current ? answersButtonContainerElement.current : new HTMLDivElement();
         for(const element of buttonsContainerElement.children) {
             element.innerHTML === currentQuestion?.correctAnswer ? element.classList.add(style.correct) : element.classList.add(style.incorrect);
             element.innerHTML === chosenAnswer ? element.classList.add(style.chosen) : element.classList.remove(style.chosen);
+            console.log(`-> innerHTML: ${element.innerHTML}`);
         }
+        console.log(`-> correct answer: ${currentQuestion?.correctAnswer}`);
+        console.log(`-> chosen answer: ${chosenAnswer}`);
 
         setIsRevealed(true);
     }

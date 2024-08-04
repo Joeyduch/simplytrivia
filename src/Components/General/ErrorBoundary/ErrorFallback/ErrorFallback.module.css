@@ -1,0 +1,14 @@
+
+.ErrorFallback {
+    text-align: center;
+    /* border: 2px solid red; */
+}
+
+.ErrorFallback > *:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.logoError {
+    margin: 0 auto;
+    max-width: 8rem;
+}
