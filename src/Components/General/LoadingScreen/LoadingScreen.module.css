@@ -3,3 +3,8 @@
     text-align: center;
     /* background-color: darkred; */
 }
+
+
+.LoadingScreen > *:not(:last-child) {
+    margin-bottom: 1rem;
+}

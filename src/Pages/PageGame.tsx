@@ -154,12 +154,14 @@ export default function PageGame() {
         if(!location.state) {
             console.error("No state in location");
             navigate("/");
+            return;
         }
 
         const formData = location.state.formData;
         if(!formData) {
             console.error("No data to fetch");
             navigate("/");
+            return;
         }
 
         const newGameSettings:GameSettings = {

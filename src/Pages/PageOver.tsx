@@ -32,12 +32,14 @@ export default function PageOver() {
         if(!location.state) {
             console.error("No state in location");
             navigate("/");
+            return;
         }
 
         const gameOverData = location.state.gameOverData;
         if(!gameOverData) {
             console.error("No gameOverData in state");
             navigate("/");
+            return;
         }
 
         setGameData(gameOverData);

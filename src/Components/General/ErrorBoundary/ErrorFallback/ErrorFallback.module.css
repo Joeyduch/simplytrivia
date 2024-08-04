@@ -8,6 +8,10 @@
     margin-bottom: 2rem;
 }
 
+.error > *:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
 .logoError {
     margin: 0 auto;
     max-width: 8rem;

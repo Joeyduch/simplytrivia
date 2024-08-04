@@ -22,9 +22,12 @@ export default function ErrorFallback({onExitCallback}:{onExitCallback?:Function
 
     return (
         <div className={style.ErrorFallback}>
-            <h1>Oops...</h1>
-            <img className={style.logoError} src={logoError} />
-            <p>Something bad happened :(</p>
+            <div className={style.error}>
+                <h1>Oops...</h1>
+                <img className={style.logoError} src={logoError} />
+                <p>Something bad happened :(</p>
+            </div>
+            
             <Button onClick={handleHomeButton} text="Back to main menu"/>
         </div>
     )

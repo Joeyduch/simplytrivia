@@ -126,13 +126,15 @@ export default function PageLanding() {
         setformAmountValue(Math.min(Math.max(parseInt(event.target.value), formValidityAmountRange.min), formValidityAmountRange.max));
     }
 
-    const handleFormDifficulty = (event: ChangeEvent<HTMLSelectElement>): void => {
-        setFormDifficultyValue(event.target.value);
-    }
+    const handleFormDifficulty = (event: ChangeEvent<HTMLSelectElement>): void => setFormDifficultyValue(event.target.value);
 
     const handleFormCategory = (event: ChangeEvent<HTMLSelectElement>): void => setFormCategoryValue(event.target.value);
 
-    const handleFormTheme = (event: ChangeEvent<HTMLSelectElement>): void => setFormThemeValue(event.target.value);
+    const handleFormTheme = (event: ChangeEvent<HTMLSelectElement>): void => {
+        const newValue = event.target.value
+        setFormThemeValue(newValue);
+        localStorage.setItem("theme", newValue);
+    }
 
     const handleFormSubmit = (): void => {
         // validation
@@ -251,10 +253,14 @@ export default function PageLanding() {
 
     }, [categoryCount, formDifficultyValue, formAmountValue])
 
+    // load saved theme
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
+        setFormThemeValue(savedTheme ? savedTheme : formThemeValue);
+    }, []);
+
     // change theme
     useEffect(() => {
-        if(!formThemeValue) return;
-
         const newTheme:Theme = themes[parseInt(formThemeValue)];
         document.documentElement.style.setProperty("--color-primary-hue", newTheme.huePrimary);
         document.documentElement.style.setProperty("--color-secondary-hue", newTheme.hueSecondary);
@@ -295,7 +301,7 @@ export default function PageLanding() {
                     
                     <label>
                         <span>Theme</span>
-                        <select name="difficulty" onChange={handleFormTheme}>
+                        <select name="difficulty" defaultValue={localStorage.getItem("theme") || formThemeValue} onChange={handleFormTheme}>
                             {themes.map((value, index) =>
                                 <option key={index} value={index}>{value.name}</option>
                             )}
