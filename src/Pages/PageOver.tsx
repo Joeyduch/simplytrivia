@@ -15,7 +15,7 @@ type GameData = {
     amount: number,
     difficulty: string,
     category: string,
-    type: string,
+    categoryName: string,
     score: number
 }
 
@@ -53,10 +53,10 @@ export default function PageOver() {
             {!gameData ? "" : <>
                 <ul className={style.dataContainer}>
                     <li>Difficulty: {gameData.difficulty}</li>
-                    <li>Category: {gameData.category}</li>
-                    <li>Type: {gameData.type}</li>
+                    <li>Category: {gameData.categoryName}</li>
+                    <li><h2>Score: {gameData.score}/{gameData.amount} ({Math.round(100*gameData.score/gameData.amount)}%)</h2></li>
                 </ul>
-                <h2>Score: {gameData.score}/{gameData.amount} ({Math.round(100*gameData.score/gameData.amount)}%)</h2>
+                
             </>}
             
             <Link to="/"><Button text="Back to menu" /></Link>

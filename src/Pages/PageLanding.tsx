@@ -152,11 +152,19 @@ export default function PageLanding() {
             return;
         }
 
+        // get category name
+        let newCategoryName = "any";
+        if(formCategoryValue!=="any" && categoryList) {
+            const indexOffset = parseInt(formCategoryValue) - categoryList[0].id; // because ids doesnt match the array index
+            newCategoryName = categoryList[indexOffset].name;
+        }
+
         // request & redirect
         const requestData = {
             amount: formAmountValue,
             difficulty: formDifficultyValue,
             category: formCategoryValue,
+            categoryName: newCategoryName,
         }
 
         navigate("/game", {state: {formData: requestData}});

@@ -58,6 +58,7 @@ type GameSettings = {
     amount: number,
     difficulty: string,
     category: string,
+    categoryName: string,
 }
 
 
@@ -168,6 +169,7 @@ export default function PageGame() {
             amount: formData.amount,
             difficulty: formData.difficulty,
             category: formData.category,
+            categoryName: formData.categoryName,
         }
         
         setGameSettings(newGameSettings);

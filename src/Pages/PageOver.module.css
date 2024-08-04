@@ -2,7 +2,7 @@
 .PageOver {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 2rem;
     align-items: center;
 
     margin: 0 auto;
@@ -15,24 +15,22 @@
 }
 
 .dataContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     gap: 2rem;
 
-    width: 100%;
+    width: fit-content;
+    padding: 2rem;
 
     text-align: center;
-}
 
-.dataContainer > *:first-child {
-    text-align: left;
-}
-.dataContainer > *:last-child {
-    text-align: right;
-}
+    border-radius: 1rem;
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
 
-.dataContainer > * {
-    /* border: 2px solid yellow; */
+    text-shadow: 0rem 0rem 1rem black;
+
+    /* border: 1px solid green; */
 }
 
 
@@ -48,11 +46,7 @@
 
 @media(max-width: 600px) {
     .dataContainer {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         gap: 1rem;
-    }
-
-    .dataContainer > *:first-child, .dataContainer > *:last-child {
-        text-align: center;
     }
 }

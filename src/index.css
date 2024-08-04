@@ -108,6 +108,7 @@ input[type="number"] {
 
 * {
   font-family: "Montserrat", sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {

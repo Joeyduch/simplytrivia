@@ -1,10 +1,5 @@
-
+COMMIT: "Removed tap highlight + Updated PageOver"
 
 - Refactor
 
-- Better loading screen
-
-
-
-- before shipping:
-    add autoprefixer (postCSS)   
+- fix smiley
