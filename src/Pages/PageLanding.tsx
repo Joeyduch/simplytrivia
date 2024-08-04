@@ -99,7 +99,7 @@ export default function PageLanding() {
     const navigate = useNavigate();
 
     // form validity
-    const formValidityAmountRange = {min:1, max:50};
+    const formValidityAmountRange = {min:0, max:50};
     const formValidityDifficulties:string[] = ["any", "easy", "medium", "hard"];
     const [formValidityCategories, setFormValidityCategories] = useState<string[]>(["any"]);
 
@@ -119,7 +119,7 @@ export default function PageLanding() {
     const handleformAmount = (event:ChangeEvent<HTMLInputElement>): void => {
         const value = event.target.value;
         if(isNaN(parseInt(value))) {
-            setformAmountValue(1);
+            setformAmountValue(formValidityAmountRange.min);
             return;
         }
 
@@ -161,7 +161,7 @@ export default function PageLanding() {
 
         // request & redirect
         const requestData = {
-            amount: formAmountValue,
+            amount: !formAmountValue ? 1 : formAmountValue,
             difficulty: formDifficultyValue,
             category: formCategoryValue,
             categoryName: newCategoryName,

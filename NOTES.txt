@@ -1,4 +1,6 @@
-COMMIT: "Removed tap highlight + Updated PageOver"
+COMMIT: "Fixed PageLanding's question amount input"
+
+- fix question amount input
 
 - Refactor
 
