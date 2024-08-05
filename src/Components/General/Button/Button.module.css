@@ -27,6 +27,10 @@
   box-shadow: 0rem 0rem 1rem 0rem var(--color-primary-500);
 }
 
+.Button:active {
+  transform: scale(0.95);
+}
+
   
 .Button::after {
   position:absolute;

@@ -1,6 +1,4 @@
-COMMIT: "Fixed PageLanding's question amount input"
 
-- fix question amount input
 
 - Refactor
 

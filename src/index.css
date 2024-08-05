@@ -109,6 +109,8 @@ input[type="number"] {
 * {
   font-family: "Montserrat", sans-serif;
   -webkit-tap-highlight-color: transparent;
+
+  user-select: none;
 }
 
 body {
@@ -169,6 +171,23 @@ input:hover, select:hover {
   background: 
     linear-gradient(135deg, var(--color-primary-300), var(--color-secondary-300)) padding-box,
     linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600)) border-box;
+}
+
+input:focus, select:focus {
+  animation: bounce 200ms;
+}
+
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 input:focus, select:focus {
