@@ -1,5 +1,6 @@
 
+- Check console warning when devmode is on
 
 - Refactor
 
-- fix smiley
+- Fix smiley

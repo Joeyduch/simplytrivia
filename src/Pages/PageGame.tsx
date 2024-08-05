@@ -118,12 +118,9 @@ export default function PageGame() {
         console.log(`-> -----------------`)
         let buttonsContainerElement:HTMLDivElement = answersButtonContainerElement.current ? answersButtonContainerElement.current : new HTMLDivElement();
         for(const element of buttonsContainerElement.children) {
-            element.innerHTML === currentQuestion?.correctAnswer ? element.classList.add(style.correct) : element.classList.add(style.incorrect);
-            element.innerHTML === chosenAnswer ? element.classList.add(style.chosen) : element.classList.remove(style.chosen);
-            console.log(`-> innerHTML: ${element.innerHTML}`);
+            element.getAttribute("data-text") === currentQuestion?.correctAnswer ? element.classList.add(style.correct) : element.classList.add(style.incorrect);
+            element.getAttribute("data-text") === chosenAnswer ? element.classList.add(style.chosen) : element.classList.remove(style.chosen);
         }
-        console.log(`-> correct answer: ${currentQuestion?.correctAnswer}`);
-        console.log(`-> chosen answer: ${chosenAnswer}`);
 
         setIsRevealed(true);
     }
