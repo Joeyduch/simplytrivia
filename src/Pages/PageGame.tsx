@@ -3,6 +3,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom"
 
+// classes
+import { GameSettings, GameFinalData } from "../Classes/GameData";
+
 // components
 import Button from "../Components/General/Button/Button"
 import LoadingScreen from "../Components/General/LoadingScreen/LoadingScreen";
@@ -50,15 +53,6 @@ class Question {
             this.incorrectAnswers[i] = text;
         }
     }
-}
-
-
-
-type GameSettings = {
-    amount: number,
-    difficulty: string,
-    category: string,
-    categoryName: string,
 }
 
 
@@ -127,7 +121,8 @@ export default function PageGame() {
 
     const handleNextButton = () => {
         if(currentQuestionIndex >= questionsList.length-1) {
-            const finalData = {... gameSettings, score:score};
+            let finalData:GameFinalData = gameSettings ? {... gameSettings, score:score} 
+                : {amount:0, difficulty:"", category:"", categoryName:"", score:score};
             navigate("/over", {state: {gameOverData: finalData}});
         }
 
@@ -155,21 +150,14 @@ export default function PageGame() {
             return;
         }
 
-        const formData = location.state.formData;
-        if(!formData) {
+        const formGameSettingsData:GameSettings = location.state.formData;
+        if(!formGameSettingsData) {
             console.error("No data to fetch");
             navigate("/");
             return;
         }
-
-        const newGameSettings:GameSettings = {
-            amount: formData.amount,
-            difficulty: formData.difficulty,
-            category: formData.category,
-            categoryName: formData.categoryName,
-        }
         
-        setGameSettings(newGameSettings);
+        setGameSettings(formGameSettingsData);
     }, []);
 
     // On gameSettings updated -> fetch question list data from API

@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+// classes
+import { GameFinalData } from "../Classes/GameData";
+
 // components
 import Button from "../Components/General/Button/Button"
 
@@ -11,13 +14,7 @@ import style from "./PageOver.module.css";
 
 
 
-type GameData = {
-    amount: number,
-    difficulty: string,
-    category: string,
-    categoryName: string,
-    score: number
-}
+
 
 
 
@@ -25,7 +22,7 @@ export default function PageOver() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [gameData, setGameData] = useState<GameData|null>(null);
+    const [gameData, setGameData] = useState<GameFinalData|null>(null);
 
 
     useEffect(() => {
@@ -35,7 +32,7 @@ export default function PageOver() {
             return;
         }
 
-        const gameOverData = location.state.gameOverData;
+        const gameOverData:GameFinalData = location.state.gameOverData;
         if(!gameOverData) {
             console.error("No gameOverData in state");
             navigate("/");

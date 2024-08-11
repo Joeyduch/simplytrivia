@@ -3,6 +3,9 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+// classes
+import { GameSettings } from "../Classes/GameData";
+
 // components
 import Button from "../Components/General/Button/Button"
 
@@ -81,11 +84,25 @@ const themes:Theme[] = [
         hueWrong: "300"
     },
     {
+        name: "Forest",
+        huePrimary: "110",
+        hueSecondary: "150",
+        hueRight: "125",
+        hueWrong: "15"
+    },
+    {
         name: "Alien",
         huePrimary: "300",
         hueSecondary: "150",
         hueRight: "150",
         hueWrong: "300"
+    },
+    {
+        name: "Golden",
+        huePrimary: "50",
+        hueSecondary: "25",
+        hueRight: "125",
+        hueWrong: "350"
     }
 ]
 
@@ -160,14 +177,14 @@ export default function PageLanding() {
         }
 
         // request & redirect
-        const requestData = {
+        const gameSettingsRequestData:GameSettings = {
             amount: !formAmountValue ? 1 : formAmountValue,
             difficulty: formDifficultyValue,
             category: formCategoryValue,
             categoryName: newCategoryName,
         }
 
-        navigate("/game", {state: {formData: requestData}});
+        navigate("/game", {state: {formData: gameSettingsRequestData}});
     }
 
     // ------------------
